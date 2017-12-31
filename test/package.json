@@ -1,0 +1,39 @@
+{
+  "name": "test",
+  "version": "0.0.1",
+  "private": true,
+  "scripts": {
+    "start": "node node_modules/react-native/local-cli/cli.js start",
+    "test": "jest",
+    "flow": "flow",
+    "prettier": "prettier-eslint",
+    "lint": "eslint",
+    "ios": "react-native run-ios"
+  },
+  "dependencies": {
+    "react": "16.0.0",
+    "react-native": "0.51.0"
+  },
+  "devDependencies": {
+    "babel-eslint": "^8.0.3",
+    "babel-jest": "21.2.0",
+    "babel-plugin-syntax-flow": "^6.18.0",
+    "babel-plugin-syntax-jsx": "^6.18.0",
+    "babel-preset-react-native": "4.0.0",
+    "eslint": "^4.13.1",
+    "eslint-config-prettier": "^2.9.0",
+    "eslint-plugin-flowtype": "^2.40.1",
+    "eslint-plugin-import": "^2.8.0",
+    "eslint-plugin-import-order-autofix": "^0.8.3",
+    "eslint-plugin-prettier": "^2.4.0",
+    "eslint-plugin-react": "^7.5.1",
+    "flow-bin": "^0.57.0",
+    "jest": "21.2.1",
+    "prettier": "^1.9.2",
+    "prettier-eslint": "^8.5.0",
+    "react-test-renderer": "16.0.0"
+  },
+  "jest": {
+    "preset": "react-native"
+  }
+}
