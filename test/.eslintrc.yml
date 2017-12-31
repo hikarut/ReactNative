@@ -51,10 +51,10 @@ rules:
   flowtype/require-parameter-type:
     - 2
     - excludeArrowFunctions: true
-  flowtype/require-valid-file-annotation:
-    - 1
-    - always
-    - annotationStyle: block
+  #flowtype/require-valid-file-annotation:
+  #  - 1
+  #  - always
+  #  - annotationStyle: block
   flowtype/space-after-type-colon: 2
   flowtype/space-before-type-colon:
     - 2

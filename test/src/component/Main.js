@@ -3,6 +3,7 @@
 import React, { Component } from 'react'
 import { Platform, StyleSheet, Text, View } from 'react-native'
 import ImageSample from './ImageSample'
+import type { Threads } from '../types'
 
 const instructions = Platform.select({
   ios: 'Press Cmd+R to reload,\n' + 'Cmd+D or shake for dev menu',
@@ -14,9 +15,16 @@ const instructions = Platform.select({
 const qiitaUrl = 'https://qiita.com/api/v2/tags/reactjs/items'
 console.log(qiitaUrl)
 
-export default class Main extends Component<{}> {
+type State = {
+  threads: Array<Threads>
+}
+
+export default class Main extends Component<void, State> {
+  state: State
+
   constructor() {
     super()
+    this.state = { threads: [] }
   }
 
   render() {
