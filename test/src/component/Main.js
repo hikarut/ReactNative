@@ -1,5 +1,7 @@
 /* @flow */
 
+'use strict'
+
 import React, { Component } from 'react'
 import { Platform, StyleSheet, Text, View } from 'react-native'
 import ImageSample from './ImageSample'
@@ -25,6 +27,29 @@ export default class Main extends Component<void, State> {
   constructor() {
     super()
     this.state = { threads: [] }
+  }
+
+  // 初期処理
+  componentWillMount() {
+    console.log('componentWillMount')
+    this.fetchData()
+    const threads = this.state
+    console.log(threads)
+  }
+
+  // API呼び出し
+  fetchData(): void {
+    console.log('fetchData')
+    fetch(qiitaUrl)
+      .then(response => response.json())
+      .then(responseData => {
+        this.setState({
+          threads: responseData
+        })
+        console.log('responseData')
+        console.log(responseData)
+      })
+      .done()
   }
 
   render() {
