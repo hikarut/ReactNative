@@ -33,6 +33,8 @@ export default class Main extends Component<void, State> {
   componentWillMount() {
     console.log('componentWillMount')
     this.fetchData()
+
+    // fetchDataが非同期なのでこのタイミングではthreadsは空
     const threads = this.state
     console.log(threads)
   }
