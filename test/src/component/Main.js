@@ -5,7 +5,7 @@
 import React, { Component } from 'react'
 import { Platform, StyleSheet, Text, View } from 'react-native'
 import ImageSample from './ImageSample'
-import type { Threads } from '../types'
+// import type { Threads } from '../types'
 
 const instructions = Platform.select({
   ios: 'Press Cmd+R to reload,\n' + 'Cmd+D or shake for dev menu',
@@ -18,7 +18,10 @@ const qiitaUrl = 'https://qiita.com/api/v2/tags/reactjs/items'
 console.log(qiitaUrl)
 
 type State = {
-  threads: Array<Threads>
+  // threads: Array<Threads>
+  // threads: Array<Object>
+  threads: Object,
+  loaded: boolean
 }
 
 export default class Main extends Component<void, State> {
@@ -26,7 +29,7 @@ export default class Main extends Component<void, State> {
 
   constructor() {
     super()
-    this.state = { threads: [] }
+    this.state = { threads: {}, loaded: false }
   }
 
   // 初期処理
@@ -46,7 +49,8 @@ export default class Main extends Component<void, State> {
       .then(response => response.json())
       .then(responseData => {
         this.setState({
-          threads: responseData
+          threads: responseData,
+          loaded: true
         })
         console.log('responseData')
         console.log(responseData)
@@ -54,7 +58,20 @@ export default class Main extends Component<void, State> {
       .done()
   }
 
+  // ローディング画面
+  renderLoadingView() {
+    return (
+      <View style={styles.container}>
+        <Text>Loading...</Text>
+      </View>
+    )
+  }
+
   render() {
+    if (!this.state.loaded) {
+      return this.renderLoadingView()
+    }
+
     return (
       <View style={styles.container}>
         <Text style={styles.welcome}>Welcome to React Native!</Text>
