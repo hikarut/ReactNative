@@ -3,7 +3,7 @@
 'use strict'
 
 import React, { Component } from 'react'
-import { Platform, StyleSheet, Text, View } from 'react-native'
+import { Platform, StyleSheet, Text, View, FlatList } from 'react-native'
 import ImageSample from './ImageSample'
 // import type { Threads } from '../types'
 
@@ -19,9 +19,10 @@ console.log(qiitaUrl)
 
 type State = {
   // threads: Array<Threads>
-  // threads: Array<Object>
-  threads: Object,
+  threads: Array<Object>,
+  // threads: Object,
   loaded: boolean
+  // dataSource: Object
 }
 
 export default class Main extends Component<void, State> {
@@ -29,7 +30,13 @@ export default class Main extends Component<void, State> {
 
   constructor() {
     super()
-    this.state = { threads: {}, loaded: false }
+    this.state = {
+      //threads: {},
+      // FlatList用に配列にする
+      threads: [],
+      loaded: false
+      // dataSource: {}
+    }
   }
 
   // 初期処理
@@ -48,12 +55,21 @@ export default class Main extends Component<void, State> {
     fetch(qiitaUrl)
       .then(response => response.json())
       .then(responseData => {
+        const data = responseData.map(i => {
+          const tmp = {}
+          // keyとdataに分けてセットしないとエラーではないがFlowのチェックに弾かれる
+          // FlatList用にkeyにtitleをセット
+          tmp.key = i.title
+          // それ以外をdataにセット
+          tmp.data = i
+          return tmp
+        })
+
         this.setState({
-          threads: responseData,
+          // threads: responseData,
+          threads: data,
           loaded: true
         })
-        console.log('responseData')
-        console.log(responseData)
       })
       .done()
   }
@@ -78,6 +94,18 @@ export default class Main extends Component<void, State> {
         <Text style={styles.instructions}>To get started, edit App.js</Text>
         <Text style={styles.instructions}>{instructions}</Text>
         <ImageSample />
+        <FlatList
+          data={this.state.threads}
+          renderItem={({ item }) => (
+            <Text>
+              {item.key}
+              {'\n'}
+              {item.data.url}
+              {'\n'}
+              {'\n'}
+            </Text>
+          )}
+        />
       </View>
     )
   }
