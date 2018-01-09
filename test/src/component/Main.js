@@ -3,7 +3,16 @@
 'use strict'
 
 import React, { Component } from 'react'
-import { Platform, StyleSheet, Text, View, FlatList } from 'react-native'
+import {
+  Platform,
+  StyleSheet,
+  Text,
+  View,
+  FlatList,
+  Image,
+  Dimensions,
+  Linking
+} from 'react-native'
 import ImageSample from './ImageSample'
 // import type { Threads } from '../types'
 
@@ -16,6 +25,7 @@ const instructions = Platform.select({
 
 const qiitaUrl = 'https://qiita.com/api/v2/tags/reactjs/items'
 console.log(qiitaUrl)
+const { width } = Dimensions.get('window')
 
 type State = {
   // threads: Array<Threads>
@@ -64,6 +74,7 @@ export default class Main extends Component<void, State> {
           tmp.data = i
           return tmp
         })
+        console.log(data)
 
         this.setState({
           // threads: responseData,
@@ -97,13 +108,21 @@ export default class Main extends Component<void, State> {
         <FlatList
           data={this.state.threads}
           renderItem={({ item }) => (
-            <Text>
-              {item.key}
-              {'\n'}
-              {item.data.url}
-              {'\n'}
-              {'\n'}
-            </Text>
+            <View style={styles.list}>
+              <Image
+                source={{ uri: item.data.user.profile_image_url }}
+                style={styles.thumbnail}
+              />
+              <View style={styles.rightContainer}>
+                <Text
+                  style={styles.title}
+                  onPress={() => Linking.openURL(item.data.url)}
+                >
+                  {item.key}
+                </Text>
+                <Text style={styles.date}>{item.data.created_at}</Text>
+              </View>
+            </View>
           )}
         />
       </View>
@@ -127,5 +146,31 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     color: '#333333',
     marginBottom: 5
+  },
+  title: {
+    fontSize: 15,
+    margin: 8,
+    textAlign: 'left'
+    // flexWrap: 'wrap'
+  },
+  date: {
+    fontSize: 10,
+    margin: 8,
+    textAlign: 'left',
+    flexWrap: 'wrap'
+  },
+  thumbnail: {
+    width: 80,
+    height: 80,
+    margin: 2
+  },
+  list: {
+    flex: 1,
+    flexDirection: 'row',
+    // 画面一杯
+    width: width
+  },
+  rightContainer: {
+    flex: 1
   }
 })
