@@ -11,7 +11,8 @@ import {
   FlatList,
   Image,
   Dimensions,
-  Linking
+  Linking,
+  ActivityIndicator
 } from 'react-native'
 import ImageSample from './ImageSample'
 // import type { Threads } from '../types'
@@ -89,7 +90,7 @@ export default class Main extends Component<void, State> {
   renderLoadingView() {
     return (
       <View style={styles.container}>
-        <Text>Loading...</Text>
+        <ActivityIndicator size="large" color="black" />
       </View>
     )
   }
