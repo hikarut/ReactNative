@@ -30,6 +30,7 @@ const qiitaUrl = 'https://qiita.com/api/v2/tags/reactjs/items'
 console.log(qiitaUrl)
 const { width } = Dimensions.get('window')
 
+// 型の定義
 type State = {
   // threads: Array<Threads>
   threads: Array<Object>,
@@ -38,10 +39,12 @@ type State = {
   // dataSource: Object
 }
 
+// 型の定義
 type Props = {
   navigation: Object
 }
 
+// メインとなるページ
 class Home extends Component<Props, State> {
   state: State
   props: Props
@@ -147,7 +150,8 @@ class Home extends Component<Props, State> {
   }
 }
 
-const SimpleApp = StackNavigator(
+// ナビゲーションの定義
+const NavigationView = StackNavigator(
   {
     Home: { screen: Home },
     Detail: { screen: Detail }
@@ -157,9 +161,10 @@ const SimpleApp = StackNavigator(
   }
 )
 
+// ナビゲーションを表示
 export default class Main extends Component<void, State> {
   render() {
-    return <SimpleApp />
+    return <NavigationView />
   }
 }
 
