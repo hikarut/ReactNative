@@ -1,14 +1,12 @@
 /* @flow */
 
 import React, { Component } from 'react'
-import { View, Text } from 'react-native'
+import { WebView } from 'react-native'
 
 export default class Detail extends Component<{}> {
   render() {
     return (
-      <View>
-        <Text>Detail</Text>
-      </View>
+      <WebView source={{ uri: 'https://github.com/facebook/react-native' }} />
     )
   }
 }
