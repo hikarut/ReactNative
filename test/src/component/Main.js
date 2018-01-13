@@ -19,6 +19,8 @@ import Detail from './Detail'
 // import type { Threads } from '../types'
 import { StackNavigator } from 'react-navigation'
 
+console.log('Main.js')
+
 const instructions = Platform.select({
   ios: 'Press Cmd+R to reload,\n' + 'Cmd+D or shake for dev menu',
   android:
@@ -138,7 +140,13 @@ class Home extends Component<Props, State> {
                 >
                   {item.key}
                 </Text>
-                <Text style={styles.date} onPress={() => navigate('Detail')}>
+                <Text
+                  style={styles.date}
+                  onPress={() =>
+                    navigate('Detail', { title: item.key, url: item.data.url })
+                  }
+                  title="aaa"
+                >
                   {item.data.created_at}
                 </Text>
               </View>
@@ -162,7 +170,7 @@ const NavigationView = StackNavigator(
 )
 
 // ナビゲーションを表示
-export default class Main extends Component<void, State> {
+export default class Main extends Component<{}> {
   render() {
     return <NavigationView />
   }
