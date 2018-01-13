@@ -145,7 +145,6 @@ class Home extends Component<Props, State> {
                   onPress={() =>
                     navigate('Detail', { title: item.key, url: item.data.url })
                   }
-                  title="aaa"
                 >
                   {item.data.created_at}
                 </Text>
