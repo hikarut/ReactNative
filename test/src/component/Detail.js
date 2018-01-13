@@ -22,10 +22,5 @@ export default class Detail extends Component<Props> {
     console.log(params)
 
     return <WebView source={{ uri: params.url }} />
-    /*
-    return (
-      <WebView source={{ uri: 'https://github.com/facebook/react-native' }} />
-    )
-    */
   }
 }
