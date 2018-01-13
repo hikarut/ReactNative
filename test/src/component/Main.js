@@ -15,7 +15,9 @@ import {
   ActivityIndicator
 } from 'react-native'
 import ImageSample from './ImageSample'
+import Detail from './Detail'
 // import type { Threads } from '../types'
+import { StackNavigator } from 'react-navigation'
 
 const instructions = Platform.select({
   ios: 'Press Cmd+R to reload,\n' + 'Cmd+D or shake for dev menu',
@@ -36,8 +38,17 @@ type State = {
   // dataSource: Object
 }
 
-export default class Main extends Component<void, State> {
+type Props = {
+  navigation: Object
+}
+
+class Home extends Component<Props, State> {
   state: State
+  props: Props
+
+  static navigationOptions = {
+    title: 'Home'
+  }
 
   constructor() {
     super()
@@ -100,6 +111,9 @@ export default class Main extends Component<void, State> {
       return this.renderLoadingView()
     }
 
+    // ナビゲーション
+    const { navigate } = this.props.navigation
+
     return (
       <View style={styles.container}>
         <Text style={styles.welcome}>Welcome to React Native!</Text>
@@ -121,13 +135,31 @@ export default class Main extends Component<void, State> {
                 >
                   {item.key}
                 </Text>
-                <Text style={styles.date}>{item.data.created_at}</Text>
+                <Text style={styles.date} onPress={() => navigate('Detail')}>
+                  {item.data.created_at}
+                </Text>
               </View>
             </View>
           )}
         />
       </View>
     )
+  }
+}
+
+const SimpleApp = StackNavigator(
+  {
+    Home: { screen: Home },
+    Detail: { screen: Detail }
+  },
+  {
+    initialRouteName: 'Home'
+  }
+)
+
+export default class Main extends Component<void, State> {
+  render() {
+    return <SimpleApp />
   }
 }
 
