@@ -4,6 +4,7 @@
 
 import React, { Component } from 'react'
 import { WebView, StyleSheet } from 'react-native'
+import Loading from './Loading'
 
 console.log('Detail.js')
 
@@ -30,11 +31,22 @@ export default class Detail extends Component<Props, State> {
     }
   }
 
+  renderLoadingView() {
+    return <Loading />
+  }
+
   render() {
     const { params } = this.props.navigation.state
     console.log(params)
 
-    return <WebView source={{ uri: params.url }} style={styles.view} />
+    return (
+      <WebView
+        source={{ uri: params.url }}
+        style={styles.view}
+        renderLoading={this.renderLoadingView}
+        startInLoadingState={true}
+      />
+    )
   }
 }
 

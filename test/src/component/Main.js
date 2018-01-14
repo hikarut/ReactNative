@@ -11,11 +11,11 @@ import {
   FlatList,
   Image,
   Dimensions,
-  Linking,
-  ActivityIndicator
+  Linking
 } from 'react-native'
 import ImageSample from './ImageSample'
 import Detail from './Detail'
+import Loading from './Loading'
 // import type { Threads } from '../types'
 import { StackNavigator } from 'react-navigation'
 
@@ -104,11 +104,7 @@ class Home extends Component<Props, State> {
 
   // ローディング画面
   renderLoadingView() {
-    return (
-      <View style={styles.container}>
-        <ActivityIndicator size="large" color="black" />
-      </View>
-    )
+    return <Loading />
   }
 
   render() {
