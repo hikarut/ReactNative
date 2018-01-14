@@ -3,7 +3,13 @@
 'use strict'
 
 import React, { Component } from 'react'
-import { WebView, StyleSheet } from 'react-native'
+import {
+  View,
+  Text,
+  WebView,
+  StyleSheet,
+  TouchableHighlight
+} from 'react-native'
 import Loading from './Loading'
 
 console.log('Detail.js')
@@ -15,8 +21,11 @@ type State = {
 
 // 型の定義
 type Props = {
-  navigation: Object
+  navigation: Object,
+  children?: Element
 }
+
+const WEBVIEW_REF = 'webview'
 
 export default class Detail extends Component<Props, State> {
   static navigationOptions = ({ navigation }) => ({
@@ -31,8 +40,13 @@ export default class Detail extends Component<Props, State> {
     }
   }
 
+  // ローディング画面
   renderLoadingView() {
     return <Loading />
+  }
+
+  tap() {
+    console.log('tap')
   }
 
   render() {
@@ -40,18 +54,36 @@ export default class Detail extends Component<Props, State> {
     console.log(params)
 
     return (
-      <WebView
-        source={{ uri: params.url }}
-        style={styles.view}
-        renderLoading={this.renderLoadingView}
-        startInLoadingState={true}
-      />
+      <View style={styles.main}>
+        <WebView
+          ref={WEBVIEW_REF}
+          source={{ uri: params.url }}
+          style={styles.view}
+          renderLoading={this.renderLoadingView}
+          startInLoadingState={true}
+        />
+        <View style={styles.footerMenu}>
+          <Text>aaaaa</Text>
+          <TouchableHighlight onPress={this.tap}>
+            <Text>ボタン</Text>
+          </TouchableHighlight>
+        </View>
+      </View>
     )
   }
 }
 
 const styles = StyleSheet.create({
+  main: {
+    flex: 1,
+    flexDirection: 'column'
+  },
   view: {
-    marginBottom: 40
+    // marginBottom: 40
+    marginBottom: 0
+  },
+  footerMenu: {
+    height: 50,
+    justifyContent: 'center'
   }
 })
