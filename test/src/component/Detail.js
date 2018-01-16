@@ -16,7 +16,8 @@ console.log('Detail.js')
 
 // 型の定義
 type State = {
-  loaded: boolean
+  loaded: boolean,
+  url: string
 }
 
 // 型の定義
@@ -25,9 +26,11 @@ type Props = {
   children?: Element
 }
 
-const WEBVIEW_REF = 'webview'
-
 export default class Detail extends Component<Props, State> {
+  state: State
+  props: Props
+  webview: WebView
+
   static navigationOptions = ({ navigation }) => ({
     title: navigation.state.params.title
   })
@@ -36,8 +39,19 @@ export default class Detail extends Component<Props, State> {
     super()
     // 初期化
     this.state = {
-      loaded: false
+      loaded: false,
+      url: ''
     }
+  }
+
+  // 初期処理
+  componentWillMount() {
+    // this.ref = null
+    const { params } = this.props.navigation.state
+    console.log(typeof params.url)
+    this.setState({
+      url: params.url
+    })
   }
 
   // ローディング画面
@@ -45,27 +59,69 @@ export default class Detail extends Component<Props, State> {
     return <Loading />
   }
 
-  tap() {
+  tap(): void {
     console.log('tap')
+    console.log(this)
+    console.log(this.state)
+    /*
+    // stateの変更サンプル
+    this.setState({
+      loaded: false,
+      url: 'https://www.yahoo.co.jp/'
+    })
+    */
+    console.log(this.webview)
+    this.webview.goBack()
   }
+
+  onNavigationStateChange(status: Object): void {
+    // 戻る、進ができるか状態が見れる
+    console.log('onNavigationStateChange')
+    console.log(status)
+  }
+
+  onLoad(status: Object): void {
+    console.log('onLoad')
+    console.log(status)
+  }
+
+  onLoadStart(status: Object): void {
+    console.log('onLoadStart')
+    console.log(status)
+  }
+
+  /*
+  onShouldStartLoadWithRequest(status: Object): boolean {
+    console.log('onShouldStartLoadWithRequest')
+    console.log(status)
+    return true
+  }
+  */
 
   render() {
     const { params } = this.props.navigation.state
+    console.log('params')
     console.log(params)
 
     return (
       <View style={styles.main}>
         <WebView
-          ref={WEBVIEW_REF}
-          source={{ uri: params.url }}
+          ref={webview => {
+            this.webview = webview
+          }}
+          source={{ uri: this.state.url }}
           style={styles.view}
           renderLoading={this.renderLoadingView}
           startInLoadingState={true}
+          javaScriptEnabled={true}
+          onNavigationStateChange={this.onNavigationStateChange.bind(this)}
+          onLoad={this.onLoad.bind(this)}
+          onLoadStart={this.onLoadStart.bind(this)}
+          // onShouldStartLoadWithRequest={this.onShouldStartLoadWithRequest.bind(this)}
         />
         <View style={styles.footerMenu}>
-          <Text>aaaaa</Text>
-          <TouchableHighlight onPress={this.tap}>
-            <Text>ボタン</Text>
+          <TouchableHighlight onPress={this.tap.bind(this)}>
+            <Text>戻る</Text>
           </TouchableHighlight>
         </View>
       </View>
@@ -79,7 +135,6 @@ const styles = StyleSheet.create({
     flexDirection: 'column'
   },
   view: {
-    // marginBottom: 40
     marginBottom: 0
   },
   footerMenu: {
