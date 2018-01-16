@@ -55,7 +55,7 @@ export default class Detail extends Component<Props, State> {
   }
 
   // ローディング画面
-  renderLoadingView() {
+  renderLoading() {
     return <Loading />
   }
 
@@ -111,7 +111,7 @@ export default class Detail extends Component<Props, State> {
           }}
           source={{ uri: this.state.url }}
           style={styles.view}
-          renderLoading={this.renderLoadingView}
+          renderLoading={this.renderLoading}
           startInLoadingState={true}
           javaScriptEnabled={true}
           onNavigationStateChange={this.onNavigationStateChange.bind(this)}
