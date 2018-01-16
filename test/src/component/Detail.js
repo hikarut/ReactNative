@@ -59,8 +59,8 @@ export default class Detail extends Component<Props, State> {
     return <Loading />
   }
 
-  tap(): void {
-    console.log('tap')
+  goBack(): void {
+    console.log('goBack')
     console.log(this)
     console.log(this.state)
     /*
@@ -72,6 +72,11 @@ export default class Detail extends Component<Props, State> {
     */
     console.log(this.webview)
     this.webview.goBack()
+  }
+
+  goForward(): void {
+    console.log('goForward')
+    this.webview.goForward()
   }
 
   onNavigationStateChange(status: Object): void {
@@ -120,8 +125,11 @@ export default class Detail extends Component<Props, State> {
           // onShouldStartLoadWithRequest={this.onShouldStartLoadWithRequest.bind(this)}
         />
         <View style={styles.footerMenu}>
-          <TouchableHighlight onPress={this.tap.bind(this)}>
+          <TouchableHighlight onPress={this.goBack.bind(this)}>
             <Text>戻る</Text>
+          </TouchableHighlight>
+          <TouchableHighlight onPress={this.goForward.bind(this)}>
+            <Text>進む</Text>
           </TouchableHighlight>
         </View>
       </View>
@@ -139,6 +147,8 @@ const styles = StyleSheet.create({
   },
   footerMenu: {
     height: 50,
-    justifyContent: 'center'
+    justifyContent: 'center',
+    alignItems: 'center',
+    flexDirection: 'row'
   }
 })
