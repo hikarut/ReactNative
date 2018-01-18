@@ -16,7 +16,7 @@ console.log('Detail.js')
 
 // 型の定義
 type State = {
-  loaded: boolean,
+  loading: boolean,
   url: string
 }
 
@@ -39,7 +39,7 @@ export default class Detail extends Component<Props, State> {
     super()
     // 初期化
     this.state = {
-      loaded: false,
+      loading: false,
       url: ''
     }
   }
@@ -66,7 +66,7 @@ export default class Detail extends Component<Props, State> {
     /*
     // stateの変更サンプル
     this.setState({
-      loaded: false,
+      loading: false,
       url: 'https://www.yahoo.co.jp/'
     })
     */
@@ -88,11 +88,17 @@ export default class Detail extends Component<Props, State> {
   onLoad(status: Object): void {
     console.log('onLoad')
     console.log(status)
+    this.setState({
+      loading: false
+    })
   }
 
   onLoadStart(status: Object): void {
     console.log('onLoadStart')
     console.log(status)
+    this.setState({
+      loading: true
+    })
   }
 
   /*
@@ -108,6 +114,15 @@ export default class Detail extends Component<Props, State> {
     console.log('params')
     console.log(params)
 
+    let loading = null
+    if (this.state.loading) {
+      loading = (
+        <View style={styles.overlay}>
+          <Loading />
+        </View>
+      )
+    }
+
     return (
       <View style={styles.main}>
         <WebView
@@ -116,8 +131,8 @@ export default class Detail extends Component<Props, State> {
           }}
           source={{ uri: this.state.url }}
           style={styles.view}
-          renderLoading={this.renderLoading}
-          startInLoadingState={true}
+          // renderLoading={this.renderLoading}
+          // startInLoadingState={true}
           javaScriptEnabled={true}
           onNavigationStateChange={this.onNavigationStateChange.bind(this)}
           onLoad={this.onLoad.bind(this)}
@@ -132,6 +147,7 @@ export default class Detail extends Component<Props, State> {
             <Text>進む</Text>
           </TouchableHighlight>
         </View>
+        {loading}
       </View>
     )
   }
@@ -150,5 +166,15 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     flexDirection: 'row'
+  },
+  overlay: {
+    flex: 1,
+    position: 'absolute',
+    left: 150,
+    right: 150,
+    top: 150,
+    bottom: 150,
+    margin: 0,
+    opacity: 1.0
   }
 })
