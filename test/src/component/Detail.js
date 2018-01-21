@@ -8,11 +8,13 @@ import {
   Text,
   WebView,
   StyleSheet,
+  Dimensions,
   TouchableHighlight
 } from 'react-native'
 import Loading from './Loading'
 
 console.log('Detail.js')
+const { width, height } = Dimensions.get('window')
 
 // 型の定義
 type State = {
@@ -170,10 +172,10 @@ const styles = StyleSheet.create({
   overlay: {
     flex: 1,
     position: 'absolute',
-    left: 150,
-    right: 150,
-    top: 150,
-    bottom: 150,
+    left: width / 3,
+    right: width / 3,
+    top: height / 3,
+    bottom: height / 3,
     margin: 0,
     opacity: 1.0
   }
