@@ -13,7 +13,6 @@ import {
   Dimensions,
   Linking
 } from 'react-native'
-import ImageSample from './ImageSample'
 import Detail from './Detail'
 import Loading from './Loading'
 // import type { Threads } from '../types'
@@ -22,10 +21,8 @@ import { StackNavigator } from 'react-navigation'
 console.log('Main.js')
 
 const instructions = Platform.select({
-  ios: 'Press Cmd+R to reload,\n' + 'Cmd+D or shake for dev menu',
-  android:
-    'Double tap R on your keyboard to reload,\n' +
-    'Shake or press menu button for dev menu'
+  ios: 'Hello iOS!',
+  android: 'Hello Android!'
 })
 
 const qiitaUrl = 'https://qiita.com/api/v2/tags/reactjs/items'
@@ -117,10 +114,7 @@ class Home extends Component<Props, State> {
 
     return (
       <View style={styles.container}>
-        <Text style={styles.welcome}>Welcome to React Native!</Text>
-        <Text style={styles.instructions}>To get started, edit App.js</Text>
         <Text style={styles.instructions}>{instructions}</Text>
-        <ImageSample />
         <FlatList
           data={this.state.threads}
           renderItem={({ item }) => (
