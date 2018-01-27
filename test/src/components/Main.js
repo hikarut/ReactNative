@@ -15,7 +15,7 @@ import {
 } from 'react-native'
 import Detail from './Detail'
 import Loading from './Loading'
-// import type { Threads } from '../types'
+import type { Threads } from '../config/types'
 import { StackNavigator } from 'react-navigation'
 
 console.log('Main.js')
