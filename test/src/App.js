@@ -6,7 +6,7 @@
 
 import React, { Component } from 'react'
 import { NavigatorIOS } from 'react-native'
-import Main from './component/Main'
+import Main from './components/Main'
 
 export default class NavigatorIOSApp extends Component<{}> {
   render() {
