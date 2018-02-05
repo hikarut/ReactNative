@@ -17,6 +17,7 @@ import Detail from './Detail'
 import Loading from './Loading'
 // import type { Threads } from '../config/types'
 import { StackNavigator } from 'react-navigation'
+import { Provider } from 'react-redux'
 
 console.log('Main.js')
 
@@ -161,7 +162,11 @@ const NavigationView = StackNavigator(
 // ナビゲーションを表示
 export default class Main extends Component<{}> {
   render() {
-    return <NavigationView />
+    return (
+      <Provider>
+        <NavigationView />
+      </Provider>
+    )
   }
 }
 
