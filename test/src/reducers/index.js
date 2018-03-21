@@ -2,6 +2,8 @@
 
 'use strict'
 
+import { combineReducers } from 'redux'
+
 export const getThreads = (state: boolean = false, action: Object) => {
   switch (action.type) {
     case 'GET_THREADS':
@@ -28,3 +30,9 @@ export const getError = (state: boolean = false, action: Object) => {
       return state
   }
 }
+
+export default combineReducers({
+  getThreads,
+  loadData,
+  getError
+})
