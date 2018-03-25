@@ -2,9 +2,12 @@
 
 import React from 'react'
 import { AppRegistry } from 'react-native'
-import Main from './src/components/Main'
+// import Main from './src/components/Main'
+import ReduxSample from './src/components/ReduxSample'
 import { Provider } from 'react-redux'
-import store from './src/store'
+import configureStore from './src/store'
+
+const store = configureStore()
 
 /**
  * Provideを使ってreduxとreact連携する
@@ -12,7 +15,7 @@ import store from './src/store'
 const App = () => {
   return (
     <Provider store={store}>
-      <Main />
+      <ReduxSample />
     </Provider>
   )
 }

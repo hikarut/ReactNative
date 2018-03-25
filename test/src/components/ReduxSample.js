@@ -3,7 +3,7 @@
 'use strict'
 
 import React, { Component } from 'react'
-// import PropTypes from 'prop-types'
+import PropTypes from 'prop-types'
 import {
   Platform,
   StyleSheet,
@@ -14,12 +14,12 @@ import {
   Dimensions,
   Linking
 } from 'react-native'
-import Detail from './Detail'
 import Loading from './Loading'
 // import type { Threads } from '../config/types'
-import { StackNavigator } from 'react-navigation'
 import { connect } from 'react-redux'
 import actions from '../actions/fetch'
+
+console.log('ReduxSample.js')
 
 const instructions = Platform.select({
   ios: 'Hello iOS!',
@@ -27,7 +27,6 @@ const instructions = Platform.select({
 })
 
 const qiitaUrl = 'https://qiita.com/api/v2/tags/reactjs/items'
-console.log(qiitaUrl)
 const { width } = Dimensions.get('window')
 
 // 型の定義
@@ -46,16 +45,14 @@ type Props = {
   threads: Array<Object>,
   loaded: boolean,
   hasError: boolean
+  // fetchData: Object
 }
 
 // メインとなるページ
-class Home extends Component<Props, State> {
+// export default class ReduxSample extends Component<Props, State> {
+class ReduxSample extends Component<Props, State> {
   state: State
   props: Props
-
-  static navigationOptions = {
-    title: 'Home'
-  }
 
   constructor() {
     super()
@@ -77,11 +74,9 @@ class Home extends Component<Props, State> {
     // this.props.fetchData(qiitaUrl)
     console.log('---this.props---')
     console.log(this.props)
-    // this.props.fetchData(qiitaUrl)
-
-    // fetchDataが非同期なのでこのタイミングではthreadsは空
-    const threads = this.state
-    console.log(threads)
+    // const fData = this.props.fetchData(qiitaUrl)
+    // console.log('---fData---')
+    // console.log(fData)
   }
 
   // API呼び出し
@@ -120,9 +115,6 @@ class Home extends Component<Props, State> {
       return this.renderLoadingView()
     }
 
-    // ナビゲーション
-    const { navigate } = this.props.navigation
-
     return (
       <View style={styles.container}>
         <Text style={styles.instructions}>{instructions}</Text>
@@ -141,14 +133,7 @@ class Home extends Component<Props, State> {
                 >
                   {item.key}
                 </Text>
-                <Text
-                  style={styles.date}
-                  onPress={() =>
-                    navigate('Detail', { title: item.key, url: item.data.url })
-                  }
-                >
-                  {item.data.created_at}
-                </Text>
+                <Text style={styles.date}>{item.data.created_at}</Text>
               </View>
             </View>
           )}
@@ -159,14 +144,14 @@ class Home extends Component<Props, State> {
 }
 
 // reduxとの連携
-/*
-Home.propTypes = {
+ReduxSample.propTypes = {
   threads: PropTypes.array.isRequired,
   loaded: PropTypes.array.isRequired,
   hasError: PropTypes.bool.isRequired
 }
-*/
+
 const mapStateToProps = state => ({
+  fetchData: PropTypes.func.isRequired,
   threads: state.threads,
   loaded: state.loaded,
   hasError: state.hasError
@@ -174,25 +159,7 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = dispatch => ({
   fetchData: url => dispatch(actions(url))
 })
-connect(mapStateToProps, mapDispatchToProps)(Home)
-
-// ナビゲーションの定義
-const NavigationView = StackNavigator(
-  {
-    Home: { screen: Home },
-    Detail: { screen: Detail }
-  },
-  {
-    initialRouteName: 'Home'
-  }
-)
-
-// ナビゲーションを表示
-export default class Main extends Component<{}> {
-  render() {
-    return <NavigationView />
-  }
-}
+export default connect(mapStateToProps, mapDispatchToProps)(ReduxSample)
 
 const styles = StyleSheet.create({
   container: {
