@@ -17,9 +17,14 @@ import Detail from './Detail'
 import Loading from './Loading'
 // import type { Threads } from '../config/types'
 import { StackNavigator } from 'react-navigation'
-import { Provider } from 'react-redux'
+import { connect } from 'react-redux'
+import store from '../store'
+import actions from '../actions/fetch'
 
 console.log('Main.js')
+
+console.log('---store---')
+console.log(store)
 
 const instructions = Platform.select({
   ios: 'Hello iOS!',
@@ -68,6 +73,11 @@ class Home extends Component<Props, State> {
   componentWillMount() {
     console.log('componentWillMount')
     this.fetchData()
+
+    // this.props.fetchData(qiitaUrl)
+    console.log('---this.props---')
+    console.log(this.props)
+    // this.props.fetchData(qiitaUrl)
 
     // fetchDataが非同期なのでこのタイミングではthreadsは空
     const threads = this.state
@@ -148,9 +158,21 @@ class Home extends Component<Props, State> {
   }
 }
 
+// reduxとの連携
+const mapStateToProps = state => ({
+  threads: state.threads,
+  loaded: state.loaded,
+  hasError: state.hasError
+})
+const mapDispatchToProps = dispatch => ({
+  fetchData: url => dispatch(actions(url))
+})
+connect(mapStateToProps, mapDispatchToProps)(Home)
+
 // ナビゲーションの定義
 const NavigationView = StackNavigator(
   {
+    // Home: { screen: <Provider store={store}>Home</Provider> },
     Home: { screen: Home },
     Detail: { screen: Detail }
   },
@@ -162,11 +184,7 @@ const NavigationView = StackNavigator(
 // ナビゲーションを表示
 export default class Main extends Component<{}> {
   render() {
-    return (
-      <Provider>
-        <NavigationView />
-      </Provider>
-    )
+    return <NavigationView />
   }
 }
 

@@ -20,7 +20,8 @@ export const getError = (status: boolean) => ({
   hasError: status
 })
 
-export function fetchData(url: string): Object {
+// export function fetchData(url: string): Object {
+export default function fetchData(url: string): Object {
   return dispatch => {
     dispatch(loadData(false))
 
