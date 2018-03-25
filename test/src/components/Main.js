@@ -3,6 +3,7 @@
 'use strict'
 
 import React, { Component } from 'react'
+// import PropTypes from 'prop-types'
 import {
   Platform,
   StyleSheet,
@@ -18,13 +19,9 @@ import Loading from './Loading'
 // import type { Threads } from '../config/types'
 import { StackNavigator } from 'react-navigation'
 import { connect } from 'react-redux'
-import store from '../store'
 import actions from '../actions/fetch'
 
 console.log('Main.js')
-
-console.log('---store---')
-console.log(store)
 
 const instructions = Platform.select({
   ios: 'Hello iOS!',
@@ -40,13 +37,17 @@ type State = {
   // threads: Array<Threads>
   threads: Array<Object>,
   // threads: Object,
-  loaded: boolean
+  loaded: boolean,
+  hasError: boolean
   // dataSource: Object
 }
 
 // 型の定義
 type Props = {
-  navigation: Object
+  navigation: Object,
+  threads: Array<Object>,
+  loaded: boolean,
+  hasError: boolean
 }
 
 // メインとなるページ
@@ -64,7 +65,8 @@ class Home extends Component<Props, State> {
       //threads: {},
       // FlatList用に配列にする
       threads: [],
-      loaded: false
+      loaded: false,
+      hasError: false
       // dataSource: {}
     }
   }
@@ -159,6 +161,13 @@ class Home extends Component<Props, State> {
 }
 
 // reduxとの連携
+/*
+Home.propTypes = {
+  threads: PropTypes.array.isRequired,
+  loaded: PropTypes.array.isRequired,
+  hasError: PropTypes.bool.isRequired
+}
+*/
 const mapStateToProps = state => ({
   threads: state.threads,
   loaded: state.loaded,
@@ -172,7 +181,6 @@ connect(mapStateToProps, mapDispatchToProps)(Home)
 // ナビゲーションの定義
 const NavigationView = StackNavigator(
   {
-    // Home: { screen: <Provider store={store}>Home</Provider> },
     Home: { screen: Home },
     Detail: { screen: Detail }
   },
