@@ -3,7 +3,7 @@
 'use strict'
 
 import React, { Component } from 'react'
-// import PropTypes from 'prop-types'
+import PropTypes from 'prop-types'
 import {
   Platform,
   StyleSheet,
@@ -84,6 +84,19 @@ class Home extends Component<Props, State> {
     console.log(threads)
   }
 
+  componentDidMount() {
+    // this.props.fetchData(qiitaUrl)
+    console.log('---after fetchData this.props---')
+    console.log('componentDidMount')
+    console.log(this.props)
+    /*
+    setTimeout(() => {
+      console.log('I do not leak!')
+      console.log(this.props)
+    }, 5000)
+    */
+  }
+
   // API呼び出し
   fetchData(): void {
     console.log('fetchData')
@@ -159,17 +172,15 @@ class Home extends Component<Props, State> {
 }
 
 // reduxとの連携
-/*
 Home.propTypes = {
   threads: PropTypes.array.isRequired,
-  loaded: PropTypes.array.isRequired,
+  loaded: PropTypes.bool.isRequired,
   hasError: PropTypes.bool.isRequired
 }
-*/
 const mapStateToProps = state => ({
-  threads: state.threads,
-  loaded: state.loaded,
-  hasError: state.hasError
+  threads: state.getThreads,
+  loaded: state.loadData,
+  hasError: state.getError
 })
 const mapDispatchToProps = dispatch => ({
   fetchData: url => dispatch(actions(url))

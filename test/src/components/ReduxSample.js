@@ -54,8 +54,11 @@ class ReduxSample extends Component<Props, State> {
   state: State
   props: Props
 
-  constructor() {
-    super()
+  constructor(props: Props) {
+    // constructor() {
+    super(props)
+    // super()
+    /*
     this.state = {
       //threads: {},
       // FlatList用に配列にする
@@ -64,19 +67,31 @@ class ReduxSample extends Component<Props, State> {
       hasError: false
       // dataSource: {}
     }
+    */
   }
 
   // 初期処理
   componentWillMount() {
     console.log('componentWillMount')
-    this.fetchData()
+    // this.fetchData()
 
     // this.props.fetchData(qiitaUrl)
     console.log('---this.props---')
     console.log(this.props)
-    // const fData = this.props.fetchData(qiitaUrl)
-    // console.log('---fData---')
-    // console.log(fData)
+    // this.props.fetchData(qiitaUrl)
+  }
+
+  componentDidMount() {
+    this.props.fetchData(qiitaUrl)
+    console.log('---after fetchData this.props---')
+    console.log('componentDidMount')
+    console.log(this.props)
+    /*
+    setTimeout(() => {
+      console.log('I do not leak!')
+      console.log(this.props)
+    }, 5000)
+    */
   }
 
   // API呼び出し
@@ -111,7 +126,11 @@ class ReduxSample extends Component<Props, State> {
   }
 
   render() {
-    if (!this.state.loaded) {
+    // if (!this.state.loaded) {
+    console.log('==this.props.loaded==')
+    console.log(this.props.loaded)
+    console.log(this.props.threads)
+    if (!this.props.loaded) {
       return this.renderLoadingView()
     }
 
@@ -119,7 +138,8 @@ class ReduxSample extends Component<Props, State> {
       <View style={styles.container}>
         <Text style={styles.instructions}>{instructions}</Text>
         <FlatList
-          data={this.state.threads}
+          // data={this.state.threads}
+          data={this.props.threads}
           renderItem={({ item }) => (
             <View style={styles.list}>
               <Image
@@ -146,15 +166,13 @@ class ReduxSample extends Component<Props, State> {
 // reduxとの連携
 ReduxSample.propTypes = {
   threads: PropTypes.array.isRequired,
-  loaded: PropTypes.array.isRequired,
+  loaded: PropTypes.bool.isRequired,
   hasError: PropTypes.bool.isRequired
 }
-
 const mapStateToProps = state => ({
-  fetchData: PropTypes.func.isRequired,
-  threads: state.threads,
-  loaded: state.loaded,
-  hasError: state.hasError
+  threads: state.getThreads,
+  loaded: state.loadData,
+  hasError: state.getError
 })
 const mapDispatchToProps = dispatch => ({
   fetchData: url => dispatch(actions(url))
