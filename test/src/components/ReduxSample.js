@@ -15,7 +15,6 @@ import {
   Linking
 } from 'react-native'
 import Loading from './Loading'
-// import type { Threads } from '../config/types'
 import { connect } from 'react-redux'
 import actions from '../actions/fetch'
 
@@ -31,12 +30,9 @@ const { width } = Dimensions.get('window')
 
 // 型の定義
 type State = {
-  // threads: Array<Threads>
   threads: Array<Object>,
-  // threads: Object,
   loaded: boolean,
   hasError: boolean
-  // dataSource: Object
 }
 
 // 型の定義
@@ -45,40 +41,21 @@ type Props = {
   threads: Array<Object>,
   loaded: boolean,
   hasError: boolean
-  // fetchData: Object
 }
 
-// メインとなるページ
-// export default class ReduxSample extends Component<Props, State> {
 class ReduxSample extends Component<Props, State> {
   state: State
   props: Props
 
   constructor(props: Props) {
-    // constructor() {
     super(props)
-    // super()
-    /*
-    this.state = {
-      //threads: {},
-      // FlatList用に配列にする
-      threads: [],
-      loaded: false,
-      hasError: false
-      // dataSource: {}
-    }
-    */
   }
 
   // 初期処理
   componentWillMount() {
     console.log('componentWillMount')
-    // this.fetchData()
-
-    // this.props.fetchData(qiitaUrl)
     console.log('---this.props---')
     console.log(this.props)
-    // this.props.fetchData(qiitaUrl)
   }
 
   componentDidMount() {
@@ -86,38 +63,6 @@ class ReduxSample extends Component<Props, State> {
     console.log('---after fetchData this.props---')
     console.log('componentDidMount')
     console.log(this.props)
-    /*
-    setTimeout(() => {
-      console.log('I do not leak!')
-      console.log(this.props)
-    }, 5000)
-    */
-  }
-
-  // API呼び出し
-  fetchData(): void {
-    console.log('fetchData')
-    fetch(qiitaUrl)
-      .then(response => response.json())
-      .then(responseData => {
-        const data = responseData.map(i => {
-          const tmp = {}
-          // keyとdataに分けてセットしないとエラーではないがFlowのチェックに弾かれる
-          // FlatList用にkeyにtitleをセット
-          tmp.key = i.title
-          // それ以外をdataにセット
-          tmp.data = i
-          return tmp
-        })
-        console.log(data)
-
-        this.setState({
-          // threads: responseData,
-          threads: data,
-          loaded: true
-        })
-      })
-      .done()
   }
 
   // ローディング画面
@@ -126,7 +71,6 @@ class ReduxSample extends Component<Props, State> {
   }
 
   render() {
-    // if (!this.state.loaded) {
     console.log('==this.props.loaded==')
     console.log(this.props.loaded)
     console.log(this.props.threads)
@@ -138,7 +82,6 @@ class ReduxSample extends Component<Props, State> {
       <View style={styles.container}>
         <Text style={styles.instructions}>{instructions}</Text>
         <FlatList
-          // data={this.state.threads}
           data={this.props.threads}
           renderItem={({ item }) => (
             <View style={styles.list}>

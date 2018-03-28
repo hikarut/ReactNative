@@ -9,9 +9,6 @@ import configureStore from './src/store'
 
 const store = configureStore()
 
-console.log('------store.getState()-------')
-console.log(store.getState())
-
 /**
  * Provideを使ってreduxとreact連携する
  */
