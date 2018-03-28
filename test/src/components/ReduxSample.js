@@ -29,33 +29,19 @@ const qiitaUrl = 'https://qiita.com/api/v2/tags/reactjs/items'
 const { width } = Dimensions.get('window')
 
 // 型の定義
-type State = {
-  threads: Array<Object>,
-  loaded: boolean,
-  hasError: boolean
-}
-
-// 型の定義
 type Props = {
   navigation: Object,
   threads: Array<Object>,
   loaded: boolean,
-  hasError: boolean
+  hasError: boolean,
+  fetchData(url: string): Object
 }
 
-class ReduxSample extends Component<Props, State> {
-  state: State
+class ReduxSample extends Component<Props> {
   props: Props
 
   constructor(props: Props) {
     super(props)
-  }
-
-  // 初期処理
-  componentWillMount() {
-    console.log('componentWillMount')
-    console.log('---this.props---')
-    console.log(this.props)
   }
 
   componentDidMount() {
