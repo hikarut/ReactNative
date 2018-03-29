@@ -5,22 +5,19 @@
 const GET_THREADS = 'GET_THREADS'
 export const getThreads = (threads: Array<Object>) => ({
   type: GET_THREADS,
-  // threads: threads
-  threads
+  threads: threads
 })
 
 const LOADING = 'LOADING'
 export const loadData = (loaded: boolean) => ({
   type: LOADING,
   loaded: loaded
-  // loaded
 })
 
 const ERROR = 'ERROR'
 export const getError = (status: boolean) => ({
   type: ERROR,
   hasError: status
-  // status
 })
 
 // export function fetchData(url: string): Object {
