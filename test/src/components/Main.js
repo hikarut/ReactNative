@@ -20,6 +20,11 @@ import Loading from './Loading'
 import { StackNavigator } from 'react-navigation'
 import { connect } from 'react-redux'
 import actions from '../actions/fetch'
+// import { Provider } from 'react-redux'
+// import configureStore from '../store'
+// import { addNavigationHelpers } from 'react-navigation'
+import { Provider } from 'react-redux'
+import configureStore from '../store'
 
 const instructions = Platform.select({
   ios: 'Hello iOS!',
@@ -57,8 +62,8 @@ class Home extends Component<Props, State> {
     title: 'Home'
   }
 
-  constructor() {
-    super()
+  constructor(props: Props) {
+    super(props)
     this.state = {
       //threads: {},
       // FlatList用に配列にする
@@ -171,8 +176,28 @@ class Home extends Component<Props, State> {
   }
 }
 
+// ナビゲーションの定義
+// const store = configureStore()
+export const NavigationView = StackNavigator(
+  {
+    Home: { screen: Home },
+    // Home: { screen: <Provider store={store}>Home</Provider> },
+    Detail: { screen: Detail }
+  },
+  {
+    initialRouteName: 'Home'
+  }
+)
+// const initialState = NavigationView.router.getStateForAction('aa')
+const initialState = NavigationView.router.getStateForAction(
+  NavigationView.router.getActionForPathAndParams('Home')
+)
+console.log('initialState')
+console.log(initialState)
+
 // reduxとの連携
-Home.propTypes = {
+// Home.propTypes = {
+NavigationView.propTypes = {
   threads: PropTypes.array.isRequired,
   loaded: PropTypes.bool.isRequired,
   hasError: PropTypes.bool.isRequired
@@ -185,23 +210,25 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = dispatch => ({
   fetchData: url => dispatch(actions(url))
 })
-connect(mapStateToProps, mapDispatchToProps)(Home)
-
-// ナビゲーションの定義
-const NavigationView = StackNavigator(
-  {
-    Home: { screen: Home },
-    Detail: { screen: Detail }
-  },
-  {
-    initialRouteName: 'Home'
-  }
-)
+// connect(mapStateToProps, mapDispatchToProps)(Home)
+connect(mapStateToProps, mapDispatchToProps)(NavigationView)
 
 // ナビゲーションを表示
+/*
 export default class Main extends Component<{}> {
   render() {
     return <NavigationView />
+  }
+}
+*/
+const store = configureStore()
+export default class Main extends Component<{}> {
+  render() {
+    return (
+      <Provider store={store}>
+        <NavigationView />
+      </Provider>
+    )
   }
 }
 
