@@ -3,7 +3,6 @@
 'use strict'
 
 import React, { Component } from 'react'
-import PropTypes from 'prop-types'
 import {
   Platform,
   StyleSheet,
@@ -17,20 +16,7 @@ import {
 import Detail from './Detail'
 import Loading from './Loading'
 // import type { Threads } from '../config/types'
-import { StackNavigator, addNavigationHelpers } from 'react-navigation'
-import { connect } from 'react-redux'
-import actions from '../actions/fetch'
-// import { Provider } from 'react-redux'
-// import configureStore from '../store'
-// import { addNavigationHelpers } from 'react-navigation'
-import { Provider } from 'react-redux'
-import configureStore from '../store'
-import {
-  createReduxBoundAddListener,
-  createReactNavigationReduxMiddleware
-} from 'react-navigation-redux-helpers'
-import { combineReducers } from 'redux'
-import { createStore, applyMiddleware } from 'redux'
+import { StackNavigator } from 'react-navigation'
 
 const instructions = Platform.select({
   ios: 'Hello iOS!',
@@ -195,88 +181,13 @@ export const NavigationView = StackNavigator(
   }
 )
 
-// navigation-redux
-const initialState = NavigationView.router.getStateForAction(
-  NavigationView.router.getActionForPathAndParams('Home')
-)
-console.log('initialState')
-console.log(initialState)
-const navReducer = (state = initialState, action) => {
-  const nextState = NavigationView.router.getStateForAction(action, state)
-  return nextState || state
-}
-const appReducer = combineReducers({
-  nav: navReducer
-})
-const middleware = createReactNavigationReduxMiddleware(
-  'root',
-  state => state.nav
-)
-const addListener = createReduxBoundAddListener('root')
-
-// reduxとの連携
-// Home.propTypes = {
-/*
-NavigationView.propTypes = {
-  threads: PropTypes.array.isRequired,
-  loaded: PropTypes.bool.isRequired,
-  hasError: PropTypes.bool.isRequired
-}
-const mapStateToProps = state => ({
-  threads: state.getThreads,
-  loaded: state.loadData,
-  hasError: state.getError
-})
-const mapDispatchToProps = dispatch => ({
-  fetchData: url => dispatch(actions(url))
-})
-// connect(mapStateToProps, mapDispatchToProps)(Home)
-connect(mapStateToProps, mapDispatchToProps)(NavigationView)
-*/
-
 // ナビゲーションを表示
-// export default class Main extends Component<{}> {
-class App extends Component<{}> {
-  render() {
-    return (
-      <NavigationView
-        navigation={addNavigationHelpers({
-          dispatch: this.props.dispatch,
-          state: this.props.nav,
-          addListener
-        })}
-      />
-    )
-  }
-}
-const mapStateToProps = state => ({
-  nav: state.nav,
-  threads: 'Threads'
-})
-const AppWithNavigationState = connect(mapStateToProps)(App)
-const store = createStore(appReducer, applyMiddleware(middleware))
 export default class Main extends Component<{}> {
+  // class App extends Component<{}> {
   render() {
-    return (
-      <Provider store={store}>
-        <AppWithNavigationState />
-      </Provider>
-    )
+    return <NavigationView />
   }
 }
-
-/*
-const store = configureStore()
-export default class Main extends Component<{}> {
-  render() {
-    return (
-      <Provider store={store}>
-        <NavigationView />
-      </Provider>
-    )
-  }
-}
-*/
 
 const styles = StyleSheet.create({
   container: {
