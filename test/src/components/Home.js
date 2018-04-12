@@ -4,7 +4,6 @@
 
 import React, { Component } from 'react'
 import {
-  Platform,
   StyleSheet,
   Text,
   View,
@@ -14,11 +13,7 @@ import {
   Linking
 } from 'react-native'
 import Loading from './Loading'
-
-const instructions = Platform.select({
-  ios: 'Hello iOS!',
-  android: 'Hello Android!'
-})
+import PlatformText from './PlatformText'
 
 const qiitaUrl = 'https://qiita.com/api/v2/tags/reactjs/items'
 console.log(qiitaUrl)
@@ -121,7 +116,7 @@ export default class Home extends Component<Props, State> {
 
     return (
       <View style={styles.container}>
-        <Text style={styles.instructions}>{instructions}</Text>
+        <PlatformText />
         <FlatList
           data={this.state.threads}
           renderItem={({ item }) => (
@@ -165,11 +160,6 @@ const styles = StyleSheet.create({
     fontSize: 20,
     textAlign: 'center',
     margin: 10
-  },
-  instructions: {
-    textAlign: 'center',
-    color: '#333333',
-    marginBottom: 5
   },
   title: {
     fontSize: 15,
