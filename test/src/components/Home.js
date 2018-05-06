@@ -15,12 +15,9 @@ import {
 import Loading from './Loading'
 import PlatformText from './PlatformText'
 import ImageList from './ImageList'
-import configureStore from '../store'
-import { Provider } from 'react-redux'
 
 const qiitaUrl = 'https://qiita.com/api/v2/tags/reactjs/items'
 const { width } = Dimensions.get('window')
-const store = configureStore()
 
 // 型の定義
 type State = {
@@ -39,6 +36,7 @@ type Props = {
 
 // メインとなるページ
 export default class Home extends Component<Props, State> {
+  // class Home extends Component<Props, State> {
   state: State
   props: Props
 
@@ -54,14 +52,21 @@ export default class Home extends Component<Props, State> {
       loaded: false,
       hasError: false
     }
+    console.log('Home')
+    console.log(this.props)
   }
 
   // 初期処理
   componentWillMount() {
     this.fetchData()
+    console.log('Home componentWillMount')
+    console.log(this.props)
   }
 
-  componentDidMount() {}
+  componentDidMount() {
+    console.log('Home componentDidMount')
+    console.log(this.props)
+  }
 
   // API呼び出し
   fetchData(): void {
@@ -102,42 +107,40 @@ export default class Home extends Component<Props, State> {
     const { navigate } = this.props.navigation
 
     return (
-      <Provider store={store}>
-        <View style={styles.container}>
-          <PlatformText />
-          <ImageList />
-          <FlatList
-            data={this.state.threads}
-            renderItem={({ item }) => (
-              <View style={styles.list}>
-                <Image
-                  source={{ uri: item.data.user.profile_image_url }}
-                  style={styles.thumbnail}
-                />
-                <View style={styles.rightContainer}>
-                  <Text
-                    style={styles.title}
-                    onPress={() => Linking.openURL(item.data.url)}
-                  >
-                    {item.key}
-                  </Text>
-                  <Text
-                    style={styles.date}
-                    onPress={() =>
-                      navigate('Detail', {
-                        title: item.key,
-                        url: item.data.url
-                      })
-                    }
-                  >
-                    {item.data.created_at}
-                  </Text>
-                </View>
+      <View style={styles.container}>
+        <PlatformText />
+        <ImageList />
+        <FlatList
+          data={this.state.threads}
+          renderItem={({ item }) => (
+            <View style={styles.list}>
+              <Image
+                source={{ uri: item.data.user.profile_image_url }}
+                style={styles.thumbnail}
+              />
+              <View style={styles.rightContainer}>
+                <Text
+                  style={styles.title}
+                  onPress={() => Linking.openURL(item.data.url)}
+                >
+                  {item.key}
+                </Text>
+                <Text
+                  style={styles.date}
+                  onPress={() =>
+                    navigate('Detail', {
+                      title: item.key,
+                      url: item.data.url
+                    })
+                  }
+                >
+                  {item.data.created_at}
+                </Text>
               </View>
-            )}
-          />
-        </View>
-      </Provider>
+            </View>
+          )}
+        />
+      </View>
     )
   }
 }

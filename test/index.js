@@ -13,15 +13,6 @@ const store = configureStore()
 /**
  * Provideを使ってreduxとreact連携する
  */
-/*
-const App   = () => {
-  return (
-    <Provider store={store}>
-      <ReduxSample />
-    </Provider>
-  )
-}
-*/
 const App = () => {
   return (
     <Provider store={store}>
@@ -30,5 +21,4 @@ const App = () => {
   )
 }
 
-// AppRegistry.registerComponent('test', () => Main)
 AppRegistry.registerComponent('test', () => App)

@@ -12,6 +12,7 @@ import {
   Linking,
   Dimensions
 } from 'react-native'
+import Loading from './Loading'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import actions from '../actions/fetch'
@@ -39,7 +40,7 @@ type Props = {
 class ImageList extends Component<Props, State> {
   constructor(props: Props) {
     super(props)
-    console.log('ImageList')
+    console.log('Imag eList')
     console.log(props)
   }
 
@@ -55,25 +56,28 @@ class ImageList extends Component<Props, State> {
     console.log(this.props.loaded)
     console.log(this.props.threads)
 
-    return (
-      <FlatList
-        data={this.props.threads}
-        renderItem={({ item }) => (
-          <View style={styles.list}>
-            <Image
-              source={{ uri: item.data.user.profile_image_url }}
-              style={styles.thumbnail}
-            />
-            <View style={styles.rightContainer}>
-              <Text
-                style={styles.title}
-                onPress={() => Linking.openURL(item.data.url)}
-              >
-                {item.key}
-              </Text>
-              <Text
-                style={styles.date}
-                /*
+    if (!this.props.loaded) {
+      return <Loading />
+    } else {
+      return (
+        <FlatList
+          data={this.props.threads}
+          renderItem={({ item }) => (
+            <View style={styles.list}>
+              <Image
+                source={{ uri: item.data.user.profile_image_url }}
+                style={styles.thumbnail}
+              />
+              <View style={styles.rightContainer}>
+                <Text
+                  style={styles.title}
+                  onPress={() => Linking.openURL(item.data.url)}
+                >
+                  {item.key}
+                </Text>
+                <Text
+                  style={styles.date}
+                  /*
                 onPress={() =>
                   navigate('Detail', {
                     title: item.key,
@@ -81,14 +85,15 @@ class ImageList extends Component<Props, State> {
                   })
                 }
                 */
-              >
-                {item.data.created_at}
-              </Text>
+                >
+                  {item.data.created_at}
+                </Text>
+              </View>
             </View>
-          </View>
-        )}
-      />
-    )
+          )}
+        />
+      )
+    }
   }
 }
 
