@@ -19,9 +19,7 @@ import configureStore from '../store'
 import { Provider } from 'react-redux'
 
 const qiitaUrl = 'https://qiita.com/api/v2/tags/reactjs/items'
-// console.log(qiitaUrl)
 const { width } = Dimensions.get('window')
-
 const store = configureStore()
 
 // 型の定義
@@ -60,29 +58,13 @@ export default class Home extends Component<Props, State> {
 
   // 初期処理
   componentWillMount() {
-    // console.log('componentWillMount')
     this.fetchData()
-
-    // this.props.fetchData(qiitaUrl)
-    // console.log('---this.props---')
-    // console.log(this.props)
-    // this.props.fetchData(qiitaUrl)
-
-    // fetchDataが非同期なのでこのタイミングではthreadsは空
-    // const threads = this.state
-    // console.log(threads)
   }
 
-  componentDidMount() {
-    // this.props.fetchData(qiitaUrl)
-    // console.log('---after fetchData this.props---')
-    // console.log('componentDidMount')
-    // console.log(this.props)
-  }
+  componentDidMount() {}
 
   // API呼び出し
   fetchData(): void {
-    // console.log('fetchData')
     fetch(qiitaUrl)
       .then(response => response.json())
       .then(responseData => {

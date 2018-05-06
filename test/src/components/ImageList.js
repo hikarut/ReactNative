@@ -28,6 +28,7 @@ type State = {
 
 // 型の定義
 type Props = {
+  fetchData(url: string): Object,
   navigation: Object,
   threads: Array<Object>,
   loaded: boolean,
