@@ -29,7 +29,7 @@ type State = {
 
 // 型の定義
 type Props = {
-  fetchData(url: string): Object,
+  fetchData(url: string): Function,
   navigation: Object,
   threads: Array<Object>,
   loaded: boolean,
@@ -56,6 +56,10 @@ class ImageList extends Component<Props, State> {
     console.log(this.props.loaded)
     console.log(this.props.threads)
 
+    const navigate: Function = this.props.navigation
+    console.log('ImageList navigate')
+    console.log(navigate)
+
     if (!this.props.loaded) {
       return <Loading />
     } else {
@@ -77,14 +81,12 @@ class ImageList extends Component<Props, State> {
                 </Text>
                 <Text
                   style={styles.date}
-                  /*
-                onPress={() =>
-                  navigate('Detail', {
-                    title: item.key,
-                    url: item.data.url
-                  })
-                }
-                */
+                  onPress={() =>
+                    navigate('Detail', {
+                      title: item.key,
+                      url: item.data.url
+                    })
+                  }
                 >
                   {item.data.created_at}
                 </Text>
@@ -106,7 +108,8 @@ ImageList.propTypes = {
 const mapStateToProps = state => ({
   threads: state.getThreads,
   loaded: state.loadData,
-  hasError: state.getError
+  hasError: state.getError,
+  nav: state.nav
 })
 const mapDispatchToProps = dispatch => ({
   fetchData: url => dispatch(actions(url))

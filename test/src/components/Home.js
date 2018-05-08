@@ -105,11 +105,13 @@ export default class Home extends Component<Props, State> {
 
     // ナビゲーション
     const { navigate } = this.props.navigation
+    console.log('navigate')
+    console.log(navigate)
 
     return (
       <View style={styles.container}>
         <PlatformText />
-        <ImageList />
+        <ImageList navigation={navigate} />
         <FlatList
           data={this.state.threads}
           renderItem={({ item }) => (
