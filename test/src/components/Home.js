@@ -107,11 +107,12 @@ export default class Home extends Component<Props, State> {
     const { navigate } = this.props.navigation
     console.log('navigate')
     console.log(navigate)
+    console.log(this.props.navigation)
 
     return (
       <View style={styles.container}>
         <PlatformText />
-        <ImageList navigation={navigate} />
+        <ImageList navigation={this.props.navigation} />
         <FlatList
           data={this.state.threads}
           renderItem={({ item }) => (

@@ -56,7 +56,7 @@ class ImageList extends Component<Props, State> {
     console.log(this.props.loaded)
     console.log(this.props.threads)
 
-    const navigate: Function = this.props.navigation
+    const { navigate } = this.props.navigation
     console.log('ImageList navigate')
     console.log(navigate)
 
