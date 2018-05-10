@@ -40,25 +40,14 @@ type Props = {
 class ImageList extends Component<Props, State> {
   constructor(props: Props) {
     super(props)
-    console.log('Imag eList')
-    console.log(props)
   }
 
   componentDidMount() {
     this.props.fetchData(qiitaUrl)
-    console.log('---ImageList after fetchData this.props---')
-    console.log('ImageList componentDidMount')
-    console.log(this.props)
   }
 
   render() {
-    console.log('==ImageList this.props.loaded==')
-    console.log(this.props.loaded)
-    console.log(this.props.threads)
-
     const { navigate } = this.props.navigation
-    console.log('ImageList navigate')
-    console.log(navigate)
 
     if (!this.props.loaded) {
       return <Loading />
