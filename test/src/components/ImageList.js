@@ -120,7 +120,6 @@ const styles = StyleSheet.create({
     fontSize: 15,
     margin: 8,
     textAlign: 'left'
-    // flexWrap: 'wrap'
   },
   date: {
     fontSize: 10,

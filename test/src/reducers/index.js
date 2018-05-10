@@ -35,5 +35,4 @@ export default combineReducers({
   getThreads,
   loadData,
   getError
-  // nav: navgation
 })
