@@ -4,18 +4,11 @@
 
 import { Platform } from 'react-native'
 
-/*
-export default instructions = Platform.select({
-  ios: 'Hello iOS!',
-  android: 'Hello Android!'
-})
-*/
-class PlatformLib {
+class PlatformString {
   instructions = Platform.select({
     ios: 'Hello iOS!',
     android: 'Hello Android!'
   })
 }
 
-// module.exports = PlatformLib
-export default PlatformLib
+export default PlatformString
