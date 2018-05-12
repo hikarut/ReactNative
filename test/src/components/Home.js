@@ -4,8 +4,10 @@
 
 import React, { Component } from 'react'
 import { StyleSheet, View } from 'react-native'
-import PlatformText from './PlatformText'
 import ImageList from './ImageList'
+import PlatformString from '../lib/platform'
+
+const instructions = new PlatformString().instructions
 
 // 型の定義
 type Props = {
@@ -20,13 +22,12 @@ export default class Home extends Component<Props> {
   props: Props
 
   static navigationOptions = {
-    title: 'Home'
+    title: instructions
   }
 
   render() {
     return (
       <View style={styles.container}>
-        <PlatformText />
         <ImageList navigation={this.props.navigation} />
       </View>
     )
