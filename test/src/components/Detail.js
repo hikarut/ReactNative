@@ -41,20 +41,12 @@ export default class Detail extends Component<Props, State> {
     super()
     // 初期化
     this.state = {
-      loading: false,
-      url: ''
+      loading: false
     }
   }
 
   // 初期処理
-  componentWillMount() {
-    // this.ref = null
-    const { params } = this.props.navigation.state
-    console.log(typeof params.url)
-    this.setState({
-      url: params.url
-    })
-  }
+  componentWillMount() {}
 
   // ローディング画面
   renderLoading() {
@@ -62,9 +54,6 @@ export default class Detail extends Component<Props, State> {
   }
 
   goBack(): void {
-    console.log('goBack')
-    console.log(this)
-    console.log(this.state)
     /*
     // stateの変更サンプル
     this.setState({
@@ -72,12 +61,10 @@ export default class Detail extends Component<Props, State> {
       url: 'https://www.yahoo.co.jp/'
     })
     */
-    console.log(this.webview)
     this.webview.goBack()
   }
 
   goForward(): void {
-    console.log('goForward')
     this.webview.goForward()
   }
 
@@ -103,14 +90,6 @@ export default class Detail extends Component<Props, State> {
     })
   }
 
-  /*
-  onShouldStartLoadWithRequest(status: Object): boolean {
-    console.log('onShouldStartLoadWithRequest')
-    console.log(status)
-    return true
-  }
-  */
-
   render() {
     const { params } = this.props.navigation.state
     console.log('params')
@@ -131,15 +110,12 @@ export default class Detail extends Component<Props, State> {
           ref={webview => {
             this.webview = webview
           }}
-          source={{ uri: this.state.url }}
+          source={{ uri: params.url }}
           style={styles.view}
-          // renderLoading={this.renderLoading}
-          // startInLoadingState={true}
           javaScriptEnabled={true}
           onNavigationStateChange={this.onNavigationStateChange.bind(this)}
           onLoad={this.onLoad.bind(this)}
           onLoadStart={this.onLoadStart.bind(this)}
-          // onShouldStartLoadWithRequest={this.onShouldStartLoadWithRequest.bind(this)}
         />
         <View style={styles.footerMenu}>
           <TouchableHighlight onPress={this.goBack.bind(this)}>
