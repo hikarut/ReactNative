@@ -21,13 +21,6 @@ const qiitaUrl = 'https://qiita.com/api/v2/tags/reactjs/items'
 const { width } = Dimensions.get('window')
 
 // 型の定義
-type State = {
-  threads: Array<Object>,
-  loaded: boolean,
-  hasError: boolean
-}
-
-// 型の定義
 type Props = {
   fetchData(url: string): Function,
   navigation: Object,
@@ -37,7 +30,7 @@ type Props = {
 }
 
 // export default class ImageList extends Component<{}> {
-class ImageList extends Component<Props, State> {
+class ImageList extends Component<Props> {
   constructor(props: Props) {
     super(props)
   }
