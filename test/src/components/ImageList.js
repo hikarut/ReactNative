@@ -29,7 +29,6 @@ type Props = {
   hasError: boolean
 }
 
-// export default class ImageList extends Component<{}> {
 class ImageList extends Component<Props> {
   constructor(props: Props) {
     super(props)

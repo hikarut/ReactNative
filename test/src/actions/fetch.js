@@ -2,25 +2,21 @@
 
 'use strict'
 
-const GET_THREADS = 'GET_THREADS'
 export const getThreads = (threads: Array<Object>) => ({
-  type: GET_THREADS,
+  type: 'GET_THREADS',
   threads: threads
 })
 
-const LOADING = 'LOADING'
 export const loadData = (loaded: boolean) => ({
-  type: LOADING,
+  type: 'LOADING',
   loaded: loaded
 })
 
-const ERROR = 'ERROR'
 export const getError = (status: boolean) => ({
-  type: ERROR,
+  type: 'ERROR',
   hasError: status
 })
 
-// export function fetchData(url: string): Object {
 export default function fetchData(url: string): Object {
   return dispatch => {
     dispatch(loadData(false))
@@ -41,7 +37,6 @@ export default function fetchData(url: string): Object {
         return data
       })
       .then(data => dispatch(getThreads(data)))
-      .then(console.log('fetchData end'))
       .catch(() => dispatch(getError(true)))
   }
 }

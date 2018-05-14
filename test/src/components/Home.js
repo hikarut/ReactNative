@@ -11,10 +11,7 @@ const instructions = new PlatformString().instructions
 
 // 型の定義
 type Props = {
-  navigation: Object,
-  threads: Array<Object>,
-  loaded: boolean,
-  hasError: boolean
+  navigation: Object
 }
 
 // メインとなるページ

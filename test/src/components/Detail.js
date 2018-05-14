@@ -16,7 +16,6 @@ import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import actions from '../actions/load'
 
-console.log('Detail.js')
 const { width, height } = Dimensions.get('window')
 
 // 型の定義
@@ -57,13 +56,11 @@ class Detail extends Component<Props> {
   // ロード終了時に呼ばれる
   onLoad(): void {
     this.props.load(false)
-    console.log('onLoad')
   }
 
   // ロード開始時に呼ばれる
   onLoadStart(): void {
     this.props.load(true)
-    console.log('onLoadStart')
   }
 
   render() {
