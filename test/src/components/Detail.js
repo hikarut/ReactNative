@@ -38,11 +38,6 @@ class Detail extends Component<Props> {
     this.props.load(false)
   }
 
-  // ローディング画面
-  renderLoading() {
-    return <Loading />
-  }
-
   goBack(): void {
     this.webview.goBack()
   }
