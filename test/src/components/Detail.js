@@ -12,24 +12,22 @@ import {
   TouchableHighlight
 } from 'react-native'
 import Loading from './Loading'
+import PropTypes from 'prop-types'
+import { connect } from 'react-redux'
+import actions from '../actions/load'
 
 console.log('Detail.js')
 const { width, height } = Dimensions.get('window')
 
 // 型の定義
-type State = {
-  loading: boolean,
-  url: string
-}
-
-// 型の定義
 type Props = {
   navigation: Object,
-  children?: Element
+  load(status: boolean): Function,
+  children?: Element,
+  loaded: boolean
 }
 
-export default class Detail extends Component<Props, State> {
-  state: State
+class Detail extends Component<Props> {
   props: Props
   webview: WebView
 
@@ -37,12 +35,11 @@ export default class Detail extends Component<Props, State> {
     title: navigation.state.params.title
   })
 
-  constructor() {
-    super()
-    // 初期化
-    this.state = {
-      loading: false
-    }
+  constructor(props: Props) {
+    super(props)
+    this.props.load(false)
+    console.log('Detail props')
+    console.log(this.props)
   }
 
   // 初期処理
@@ -54,13 +51,6 @@ export default class Detail extends Component<Props, State> {
   }
 
   goBack(): void {
-    /*
-    // stateの変更サンプル
-    this.setState({
-      loading: false,
-      url: 'https://www.yahoo.co.jp/'
-    })
-    */
     this.webview.goBack()
   }
 
@@ -68,35 +58,26 @@ export default class Detail extends Component<Props, State> {
     this.webview.goForward()
   }
 
-  onNavigationStateChange(status: Object): void {
-    // 戻る、進ができるか状態が見れる
-    console.log('onNavigationStateChange')
-    console.log(status)
-  }
+  onNavigationStateChange(): void {}
 
-  onLoad(status: Object): void {
+  // ロード終了時に呼ばれる
+  onLoad(): void {
+    this.props.load(false)
     console.log('onLoad')
-    console.log(status)
-    this.setState({
-      loading: false
-    })
   }
 
-  onLoadStart(status: Object): void {
+  // ロード開始時に呼ばれる
+  onLoadStart(): void {
+    this.props.load(true)
     console.log('onLoadStart')
-    console.log(status)
-    this.setState({
-      loading: true
-    })
   }
 
   render() {
     const { params } = this.props.navigation.state
-    console.log('params')
-    console.log(params)
 
     let loading = null
-    if (this.state.loading) {
+    // if (this.state.loading) {
+    if (this.props.loaded) {
       loading = (
         <View style={styles.overlay}>
           <Loading />
@@ -130,6 +111,18 @@ export default class Detail extends Component<Props, State> {
     )
   }
 }
+
+// reduxとの連携
+Detail.propTypes = {
+  loaded: PropTypes.bool.isRequired
+}
+const mapStateToProps = state => ({
+  loaded: state.detailLoadData
+})
+const mapDispatchToProps = dispatch => ({
+  load: status => dispatch(actions(status))
+})
+export default connect(mapStateToProps, mapDispatchToProps)(Detail)
 
 const styles = StyleSheet.create({
   main: {

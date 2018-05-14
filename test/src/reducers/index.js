@@ -3,6 +3,7 @@
 'use strict'
 
 import { combineReducers } from 'redux'
+import { detailLoadData } from './load'
 
 export const getThreads = (state: Array<Object> = [], action: Object) => {
   switch (action.type) {
@@ -34,5 +35,6 @@ export const getError = (state: boolean = false, action: Object) => {
 export default combineReducers({
   getThreads,
   loadData,
-  getError
+  getError,
+  detailLoadData
 })
