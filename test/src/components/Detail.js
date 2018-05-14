@@ -23,7 +23,6 @@ const { width, height } = Dimensions.get('window')
 type Props = {
   navigation: Object,
   load(status: boolean): Function,
-  children?: Element,
   loaded: boolean
 }
 
@@ -38,12 +37,7 @@ class Detail extends Component<Props> {
   constructor(props: Props) {
     super(props)
     this.props.load(false)
-    console.log('Detail props')
-    console.log(this.props)
   }
-
-  // 初期処理
-  componentWillMount() {}
 
   // ローディング画面
   renderLoading() {
@@ -76,7 +70,6 @@ class Detail extends Component<Props> {
     const { params } = this.props.navigation.state
 
     let loading = null
-    // if (this.state.loading) {
     if (this.props.loaded) {
       loading = (
         <View style={styles.overlay}>
