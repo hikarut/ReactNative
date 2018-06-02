@@ -22,7 +22,6 @@ type Props = {
   loaded: boolean
 }
 
-// class Detail extends Component<Props> {
 export default class Detail extends Component<Props> {
   props: Props
   webview: WebView
