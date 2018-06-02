@@ -2,7 +2,7 @@
 
 'use strict'
 
-import Detail from './Detail'
+import Detail from '../container/Detail'
 import Home from './Home'
 import { StackNavigator } from 'react-navigation'
 

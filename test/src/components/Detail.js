@@ -12,9 +12,6 @@ import {
   TouchableHighlight
 } from 'react-native'
 import Loading from './Loading'
-import PropTypes from 'prop-types'
-import { connect } from 'react-redux'
-import actions from '../actions/load'
 
 const { width, height } = Dimensions.get('window')
 
@@ -25,7 +22,8 @@ type Props = {
   loaded: boolean
 }
 
-class Detail extends Component<Props> {
+// class Detail extends Component<Props> {
+export default class Detail extends Component<Props> {
   props: Props
   webview: WebView
 
@@ -96,18 +94,6 @@ class Detail extends Component<Props> {
     )
   }
 }
-
-// reduxとの連携
-Detail.propTypes = {
-  loaded: PropTypes.bool.isRequired
-}
-const mapStateToProps = state => ({
-  loaded: state.detailLoadData
-})
-const mapDispatchToProps = dispatch => ({
-  load: status => dispatch(actions(status))
-})
-export default connect(mapStateToProps, mapDispatchToProps)(Detail)
 
 const styles = StyleSheet.create({
   main: {
