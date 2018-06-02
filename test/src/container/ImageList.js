@@ -22,6 +22,5 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = dispatch => ({
   fetchData: url => dispatch(actions(url))
 })
-console.log('aaaa')
 
 export default connect(mapStateToProps, mapDispatchToProps)(ImageList)
