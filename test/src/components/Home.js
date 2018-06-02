@@ -4,7 +4,7 @@
 
 import React, { Component } from 'react'
 import { StyleSheet, View } from 'react-native'
-import ImageList from './ImageList'
+import ImageList from '../container/ImageList'
 import PlatformString from '../lib/platform'
 
 const instructions = new PlatformString().instructions

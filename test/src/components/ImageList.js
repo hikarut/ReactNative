@@ -13,9 +13,6 @@ import {
   Dimensions
 } from 'react-native'
 import Loading from './Loading'
-import PropTypes from 'prop-types'
-import { connect } from 'react-redux'
-import actions from '../actions/fetch'
 
 const qiitaUrl = 'https://qiita.com/api/v2/tags/reactjs/items'
 const { width } = Dimensions.get('window')
@@ -29,7 +26,7 @@ type Props = {
   hasError: boolean
 }
 
-class ImageList extends Component<Props> {
+export default class ImageList extends Component<Props> {
   constructor(props: Props) {
     super(props)
   }
@@ -79,23 +76,6 @@ class ImageList extends Component<Props> {
     }
   }
 }
-
-// reduxとの連携
-ImageList.propTypes = {
-  threads: PropTypes.array.isRequired,
-  loaded: PropTypes.bool.isRequired,
-  hasError: PropTypes.bool.isRequired
-}
-const mapStateToProps = state => ({
-  threads: state.getThreads,
-  loaded: state.loadData,
-  hasError: state.getError,
-  nav: state.nav
-})
-const mapDispatchToProps = dispatch => ({
-  fetchData: url => dispatch(actions(url))
-})
-export default connect(mapStateToProps, mapDispatchToProps)(ImageList)
 
 const styles = StyleSheet.create({
   list: {
