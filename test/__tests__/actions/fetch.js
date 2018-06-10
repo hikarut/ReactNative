@@ -19,10 +19,25 @@ test('action fetch error', () => {
     }
   ]
   const store = mockStore()
-  // const url = 'https://qiita.com/api/v2/tags/reactjs/items'
   const url = 'https://yahoo.co.jp/'
 
   return store.dispatch(actions(url)).then(() => {
     expect(store.getActions()).toEqual(expected)
+  })
+})
+
+test('action fetch success', () => {
+  fetch.mockResponse(JSON.stringify(['取得']))
+  const expected = {
+    type: 'LOADING',
+    loaded: true
+  }
+
+  const store = mockStore()
+  const url = 'https://qiita.com/api/v2/tags/reactjs/items'
+
+  return store.dispatch(actions(url)).then(() => {
+    const actions = store.getActions()
+    expect(actions[1]).toEqual(expected)
   })
 })
