@@ -1,11 +1,28 @@
+import configureMockStore from 'redux-mock-store'
+import thunk from 'redux-thunk'
 import actions from '../../src/actions/fetch'
+import fetch from 'jest-fetch-mock'
 
-test('action fetch', () => {
-  const obj = {}
-  const result = actions.getThreads(obj)
-  const expected = {
-    type: 'GET_THREADS',
-    threads: obj
-  }
-  expect(result).toEqual(expected)
+const middlewares = [thunk]
+const mockStore = configureMockStore(middlewares)
+
+test('action fetch error', () => {
+  fetch.mockResponse(JSON.stringify(['取得']))
+  const expected = [
+    {
+      type: 'LOADING',
+      loaded: false
+    },
+    {
+      type: 'ERROR',
+      hasError: true
+    }
+  ]
+  const store = mockStore()
+  // const url = 'https://qiita.com/api/v2/tags/reactjs/items'
+  const url = 'https://yahoo.co.jp/'
+
+  return store.dispatch(actions(url)).then(() => {
+    expect(store.getActions()).toEqual(expected)
+  })
 })
